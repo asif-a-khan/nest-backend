@@ -59,3 +59,98 @@ Using npm:
 ```bash
 npm run start:dev
 ```
+
+
+# Notes API Interaction
+
+How to interact with the `/notes` endpoint of the backend API.
+
+**Base URL (Assuming Backend is running locally):** `http://localhost:3000/notes`
+
+**Note:** If the backend is running on a different host or port, adjust the base URL accordingly.
+
+## 1. Get All Notes (`GET /notes`)
+
+* **Description:** Retrieves a list of all notes.
+* **Method:** `GET`
+* **Endpoint:** `/notes`
+* **Request Body:** None
+* **Response Body (Success - HTTP 200 OK):** An array of note objects.
+
+    ```json
+    [
+      {
+        "_id": "unique_note_id_1",
+        "title": "My First Note",
+        "content": "This is the content of my first note.",
+        "createdAt": "2025-04-07T18:00:00.000Z",
+        "updatedAt": "2025-04-07T18:00:00.000Z"
+      },
+      {
+        "_id": "unique_note_id_2",
+        "title": "Another Thought",
+        "content": "Just jotting down another idea.",
+        "createdAt": "2025-04-07T18:05:00.000Z",
+        "updatedAt": "2025-04-07T18:05:00.000Z"
+      }
+    ]
+    ```
+
+* **Response Body (Error - HTTP 500 Internal Server Error):** An error object.
+
+## 2. Get a Single Note (`GET /notes/:id`)
+
+* **Description:** Retrieves a specific note by its ID.
+* **Method:** `GET`
+* **Endpoint:** `/notes/{noteId}`, where `{noteId}` is the unique ID of the note.
+* **Request Body:** None
+* **Response Body (Success - HTTP 200 OK):** A single note object.
+* **Response Body (Error - HTTP 404 Not Found):** If the note with the given ID does not exist.
+* **Response Body (Error - HTTP 500 Internal Server Error):** An error object.
+
+## 3. Create a New Note (`POST /notes`)
+
+* **Description:** Creates a new note.
+* **Method:** `POST`
+* **Endpoint:** `/notes`
+* **Request Body (application/json):** A JSON object containing the `title` and `content`.
+
+    ```json
+    {
+      "title": "New Note Title",
+      "content": "Content of the new note."
+    }
+    ```
+
+* **Response Body (Success - HTTP 201 Created):** The newly created note object.
+* **Response Body (Error - HTTP 400 Bad Request):** If the request body is invalid.
+* **Response Body (Error - HTTP 500 Internal Server Error):** An error object.
+
+## 4. Update an Existing Note (`PUT /notes/:id`)
+
+* **Description:** Updates an existing note with the given ID.
+* **Method:** `PUT`
+* **Endpoint:** `/notes/{noteId}`, where `{noteId}` is the unique ID of the note to update.
+* **Request Body (application/json):** A JSON object containing the updated `title` and/or `content`.
+
+    ```json
+    {
+      "title": "Updated Title",
+      "content": "Updated content."
+    }
+    ```
+
+* **Response Body (Success - HTTP 200 OK):** The updated note object.
+* **Response Body (Error - HTTP 404 Not Found):** If the note with the given ID does not exist.
+* **Response Body (Error - HTTP 400 Bad Request):** If the request body is invalid.
+* **Response Body (Error - HTTP 500 Internal Server Error):** An error object.
+
+## 5. Delete a Note (`DELETE /notes/:id`)
+
+* **Description:** Deletes the note with the given ID.
+* **Method:** `DELETE`
+* **Endpoint:** `/notes/{noteId}`, where `{noteId}` is the unique ID of the note to delete.
+* **Request Body:** None
+* **Response Body (Success - HTTP 200 OK):** A success message or the deleted note object.
+* **Response Body (Error - HTTP 404 Not Found):** If the note with the given ID does not exist.
+* **Response Body (Error - HTTP 500 Internal Server Error):** An error object.
